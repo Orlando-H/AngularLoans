@@ -1,0 +1,52 @@
+<form (ngSubmit)="createOrUpdatePrestamo()" #prestamoForm="ngForm">
+  <mat-form-field>
+    <mat-label>Nombre Cliente</mat-label>
+    <input matInput [(ngModel)]="newPrestamo.nombreCliente" name="nombreCliente" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tarifa</mat-label>
+    <input matInput [(ngModel)]="newPrestamo.tarifa" name="tarifa" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Car ID</mat-label>
+    <input matInput [(ngModel)]="newPrestamo.car_id" name="car_id" required>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">
+    {{ editingPrestamoId ? 'Update' : 'Create' }}
+  </button>
+</form>
+
+<table mat-table [dataSource]="prestamos" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombreCliente">
+    <th mat-header-cell *matHeaderCellDef> Nombre Cliente </th>
+    <td mat-cell *matCellDef="let element"> {{element.nombreCliente}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tarifa">
+    <th mat-header-cell *matHeaderCellDef> Tarifa </th>
+    <td mat-cell *matCellDef="let element"> {{element.tarifa}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="car_id">
+    <th mat-header-cell *matHeaderCellDef> Car ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.car_id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="primary" (click)="editPrestamo(element)">Editar</button>
+      <button mat-button color="warn" (click)="deletePrestamo(element.id)">Eliminar</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<p *ngIf="prestamos.length === 0">No prestamo data available.</p>
